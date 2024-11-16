@@ -36,7 +36,7 @@ class StripeController extends Controller
                 "name" => "Hardik Savani",
                 "source" => $request->stripeToken
              ));
-             
+            
 
             // Create a PaymentIntent
             $paymentIntent = PaymentIntent::create([
