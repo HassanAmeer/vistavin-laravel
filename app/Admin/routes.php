@@ -24,4 +24,5 @@ Route::group([
     $router->resource('owners-lists', ownersListController::class);
     $router->resource('glossaries', glossaryController::class);
     $router->resource('report-settings', reportSettingController::class);
+    $router->resource('pagesDesigns', PagesDesignController::class);
 });

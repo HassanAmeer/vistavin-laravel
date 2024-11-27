@@ -129,7 +129,7 @@
                                 <ul class="elementor-icon-list-items">
                                     @if($settingsData['showInstagram'] == 1)
                                     <li class="elementor-icon-list-item">
-                                        <a href="{{'https://www.instagram.com/'.$settingsData['instagramLink']}}">
+                                        <a href="{{$settingsData['instagramLink']}}">
 
                                             <span class="elementor-icon-list-icon">
                                                 <svg fill="#000000" width="800px" height="800px" viewBox="0 0 32 32"
@@ -146,7 +146,7 @@
                                     @if($settingsData['showFacebook'] == 1)
 
                                     <li class="elementor-icon-list-item">
-                                        <a href="{{'https://www.facebook.com/'.$settingsData['facebookLink']}}">
+                                        <a href="{{$settingsData['facebookLink']}}">
 
                                             <span class="elementor-icon-list-icon">
                                                 <svg aria-hidden="true" class="e-font-icon-svg e-fab-facebook-f"
