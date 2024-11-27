@@ -15,7 +15,7 @@ class contactUsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'contactUs';
+    protected $title = 'Contact Us';
 
     /**
      * Make a grid builder.
@@ -27,8 +27,8 @@ class contactUsController extends AdminController
         $grid = new Grid(new contactUs());
 
         $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('email', __('Email'));
+        $grid->column('name', __('Name'))->color('indigo');
+        $grid->column('email', __('Email'))->color('#358784FF');
         $grid->column('message', __('Message'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));

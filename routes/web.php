@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userside\HomeController;
 use App\Http\Controllers\userside\PagesByEditorByController;
 use App\Http\Controllers\userside\StripeController;
+use App\Http\Controllers\userside\pdfController;
 
 
 /*
@@ -40,6 +41,8 @@ Route::get('/terms', [PagesByEditorByController::class, 'terms'])->name('terms')
 
 Route::get('/stripe', [StripeController::class, 'stripeForm'])->name('stripe');
 Route::post('/stripe/pay', [StripeController::class, 'processPayment'])->name('stripepay');
+
+Route::get('/downloadpdf', [pdfController::class, 'downloadPdfF'])->name('downloadpdf');
 
 
 

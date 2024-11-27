@@ -13,7 +13,15 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('categoriesmodels', categoriescontroller::class);
-    $router->resource('contactUs', contactUsController::class);
+    $router->resource('contactus', contactUsController::class);
     $router->resource('settings', settingsController::class);
     $router->resource('pagesDesigns', PagesDesignController::class);
+    $router->resource('downloaded-docs', downloadedDocController::class);
+    $router->resource('vehicle-history-reports', vehicleHistoryReportsController::class);
+    $router->resource('additional-histories', additionalHistoryController::class);
+    $router->resource('title-histories', titleHistoryController::class);
+    $router->resource('ownership-histories', ownershipHistoryController::class);
+    $router->resource('owners-lists', ownersListController::class);
+    $router->resource('glossaries', glossaryController::class);
+    $router->resource('report-settings', reportSettingController::class);
 });
