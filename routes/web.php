@@ -42,7 +42,8 @@ Route::get('/terms', [PagesByEditorByController::class, 'terms'])->name('terms')
 Route::get('/stripe', [StripeController::class, 'stripeForm'])->name('stripe');
 Route::post('/stripe/pay', [StripeController::class, 'processPayment'])->name('stripepay');
 
-Route::get('/downloadpdf', [pdfController::class, 'downloadPdfF'])->name('downloadpdf');
+Route::get('/vpdf/{id}', [pdfController::class, 'viewPdfF'])->name('vpdf');
+Route::get('/dpdf/{id}', [pdfController::class, 'downloadPdfF'])->name('dpdf');
 
 
 
