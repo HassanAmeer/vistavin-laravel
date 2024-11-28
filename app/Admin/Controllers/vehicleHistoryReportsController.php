@@ -46,11 +46,29 @@ class vehicleHistoryReportsController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('showReports', __('Show Reports'))->color('green')->switch();
-        $grid->column('vId', __('Vehicle id #'))->color('silver');
+        $grid->column('type', __('Type #'))->badge($style = 'dark');
+        // $grid->column('vId', __('Vehicle id #'))->color('silver');
+        $grid->column('vId', 'Vehicle Id #')->display(function ($id) {
+     
+            if ($id) {
+                return <<<HTML
+                    <div style="margin-bottom: 10px;">
+                    <a class="icon-file-pdf" target="_blank" href="{$this->baseUrl}/vpdf/{$id}" style="text-decoration:none; color:#0090b4; font-size:1.5rem;"> <span class="user-name" id="name-{$id}" style="color:#B0AFAFFF;  font-size:1rem;"> {$id}</span> </a> 
+                    </div>
+                HTML;
+            }
+            return '<span> Empty </span>';
+        })->color('#B0AFAFFF');
+
         $grid->column('vImg', __('vehicle image'))->image($baseUrl.'/uploads/',75,75);
         $grid->column('isShowImg', __('Show image Also'))->color('orange')->switch();
         $grid->column('vName', __('Vehicle Name'));
         $grid->column('price', __('Price'))->color('blue');
+
+        $grid->column('make', __('Make'))->color("silver");
+        $grid->column('vtype', __('Vehicle Type'))->color("silver");
+        $grid->column('modelYear', __('Model Year'))->color("silver");
+        $grid->column('bodyStyle', __('Body Style'))->color("silver");
 
         $grid->column('title', __('Title'));
         $grid->column('desc', __('Descripton'))->style('min-width:35rem; white-space: normal; overflow: hidden; list-style-type: disc; color:silver;');
@@ -113,6 +131,7 @@ class vehicleHistoryReportsController extends AdminController
         })->color('orange');
         
         $show->field('vId', __('Vehicle id #'));
+        $show->field('type', __('Type #'));
         $show->field('vImg', __('vehicle image'))->image($baseUrl.'/uploads/',75,75);
         
         // $show->field('isShowImg', __('Show image Also'))->color('orange');
@@ -152,6 +171,10 @@ class vehicleHistoryReportsController extends AdminController
         });
         
         // $show->field('footerDesc', __('FooterDesc'));
+        $show->field('make', __('Make'));
+        $show->field('vtype', __('Vehicle Type'));
+        $show->field('modelYear', __('Model Year'));
+        $show->field('bodyStyle', __('Body Style'));
         $show->field('price', __('Price'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -174,11 +197,19 @@ class vehicleHistoryReportsController extends AdminController
         $form = new Form(new vehicleHistoryReports());
         
         $form->switch('showReports', __('Show Reports'))->default(false);
-        // $grid->column('vId', __('vId'));
+        // $form->text('vId', __('vId'));
+        $form->select('type','Type #')->options(["car" => 'CAR', "bike" => 'BIKE']);
+
         $form->image('vImg', __('vehicle image'));
         $form->switch('isShowImg', __('Show image Also'))->default(false);
         
         $form->text('vName', __('Vehicle Name'));
+
+        $form->text('make', __('Make'));
+        $form->text('vtype', __('Vehicle Type'));
+        $form->text('modelYear', __('Model Year'));
+        $form->text('bodyStyle', __('Body Style'));
+
         $form->text('title', __('Title'));
         $form->textarea('desc', __('Description'));
 

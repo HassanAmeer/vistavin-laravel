@@ -45,7 +45,7 @@ class ownersListController extends AdminController
                     </div>
                 HTML;
             }
-            return '<span> No User </span>';
+            return '<span> Empty </span>';
         })->color('#0090b4');
 
 

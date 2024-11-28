@@ -67,11 +67,34 @@
             </tr>
         </table>
         <br>
+        <table class="carfax-table">
+            <tr>
+                <th class="carfax-header" style="font-weight:100; color:silver;">Type</th>
+                <td style="text-transform: uppercase;">
+                    {{isset($resp['vehicleHistory']['type']) ? $resp['vehicleHistory']['type'] : ''}}</td>
+            </tr>
+            <tr>
+                <th class="carfax-header" style="font-weight:100; color:silver;">Make</th>
+                <td>{{isset($resp['vehicleHistory']['make']) ? $resp['vehicleHistory']['make'] : ''}}</td>
+            </tr>
+            <tr>
+                <th class="carfax-header" style="font-weight:100; color:silver;">Vehicle Type</th>
+                <td>{{isset($resp['vehicleHistory']['vtype']) ? $resp['vehicleHistory']['vtype'] : ''}}</td>
+            </tr>
+            <tr>
+                <th class="carfax-header" style="font-weight:100; color:silver;">Model Year</th>
+                <td>{{isset($resp['vehicleHistory']['modelYear']) ? $resp['vehicleHistory']['modelYear'] : ''}}</td>
+            </tr>
+            <tr>
+                <th class="carfax-header" style="font-weight:100; color:silver;">Body Style</th>
+                <td>{{isset($resp['vehicleHistory']['bodyStyle']) ? $resp['vehicleHistory']['bodyStyle'] : ''}}</td>
+            </tr>
+
+        </table>
         <h4>{{isset($resp['vehicleHistory']['title']) ? $resp['vehicleHistory']['title'] : ''}}</h4>
-        <p class="text-muted" style="font-weight:300; color:silver;">
+        <p style="font-weight:300; color:silver;">
             {{isset($resp['vehicleHistory']['desc']) ? $resp['vehicleHistory']['desc'] : ''}}
         </p>
-
         @foreach(isset($resp['vehicleHistory']['points']) ? $resp['vehicleHistory']['points'] : [] as $point)
         <div style="width:100%; border-top: 1px solid silver; padding-top: 2px"></div>
         <p class="text-capitalize text-secondary"><i class="fa fa-circle text-muted pr-2 fa-xs"

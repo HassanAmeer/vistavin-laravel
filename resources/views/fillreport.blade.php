@@ -3958,46 +3958,26 @@ Submit make it with white background and content theeme is indigo  -->
             <div class="details-container">
                 <h2>Details</h2>
                 <p style="margin-bottom: 1rem;">Search Result for VIN #: <span
-                        style="font-weight: 600;">1GKDT13W21K226341</span></p>
+                        style="font-weight: 600;">{{isset($resp['vehicleHistory']['vId']) ? $resp['vehicleHistory']['vId'] : ''}}</span>
+                </p>
                 <ul style="list-style: none;padding-left: 0;margin-bottom: 1rem;">
-                    <li>Make: <span style="font-weight: 600;">GMC</span></li>
-                    <li>Vehicle Type: <span style="font-weight: 600;">MPV</span></li>
-                    <li>Model Year: <span style="font-weight: 600;">2001</span></li>
-                    <li>Body Style: <span style="font-weight: 600;">SPORT UTILITY 4-DR</span></li>
-                    <li style="color: green;font-weight: 600;">Price: <span style="font-weight: 600;">$33.00</span>
+                    <li>Make: <span
+                            style="font-weight: 600;">{{isset($resp['vehicleHistory']['make']) ? $resp['vehicleHistory']['make'] : ''}}</span>
+                    </li>
+                    <li>Vehicle Type: <span
+                            style="font-weight: 600;">{{isset($resp['vehicleHistory']['vtype']) ? $resp['vehicleHistory']['vtype'] : ''}}</span>
+                    </li>
+                    <li>Model Year: <span
+                            style="font-weight: 600;">{{isset($resp['vehicleHistory']['modelYear']) ? $resp['vehicleHistory']['modelYear'] : ''}}</span>
+                    </li>
+                    <li>Body Style: <span
+                            style="font-weight: 600;">{{isset($resp['vehicleHistory']['bodyStyle']) ? $resp['vehicleHistory']['bodyStyle'] : ''}}</span>
+                    </li>
+                    <li style="color: green;font-weight: 600;">Price: <span
+                            style="font-weight: 600;">${{isset($resp['vehicleHistory']['price']) ? $resp['vehicleHistory']['price'] : ''}}</span>
                     </li>
                 </ul>
 
-
-
-                <!-- <form action="" method="post">
-                    <div class="form-group">
-                        <label for="first_name">First Name</label>
-                        <input type="text" name="first_name" id="first_name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" name="last_name" id="last_name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" name="phone" id="phone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="package">Package</label>
-                        <select name="package" id="package" required>
-                            <option value="">Select Package</option>
-                            <option value="35">Silver: $35</option>
-                            <option value="55">Gold: $55</option>
-                            <option value="85">Platinum: $85</option>
-                        </select>
-                    </div>
-                    <button type="submit">Submit</button>
-                </form> -->
 
 
 
@@ -4022,11 +4002,11 @@ Submit make it with white background and content theeme is indigo  -->
                         <input type="tel" name="phone" id="phone" required>
                     </div>
                     <div class="form-group">
-                        <label for="package">Package</label>
+                        <label for="package">Selected Package</label>
                         <select name="package" id="package" required>
-                            <option value="">Select Package</option>
+                            <!-- <option value="">Select Package</option> -->
                             <option value="35">Silver: $35</option>
-                            <option value="55">Gold: $55</option>
+                            <option value="55" selected>Gold: $55</option>
                             <option value="85">Platinum: $85</option>
                         </select>
                     </div>
@@ -4040,7 +4020,8 @@ Submit make it with white background and content theeme is indigo  -->
                         <p style="margin-bottom: 10px; font-size: 1.2rem; font-weight: bold; color: #333;">Enter Your
                             Card Details</p>
                         <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <span style="flex-shrink: 0; margin-right: 10px; font-size: 1.5rem; color: #666;">💳</span>
+                            <span style="flex-shrink: 0; margin-right: 10px; font-size: 1.5rem; color: #666;"> 💳
+                            </span>
                             <div style="flex-grow: 1;" id="card-input"></div>
                         </div>
                         <div style="text-align: center; color: #aaa; font-size: 0.9rem;">Secure and encrypted payment
@@ -4049,7 +4030,35 @@ Submit make it with white background and content theeme is indigo  -->
                     <br>
 
                     <!-- Payment button -->
-                    <button type="submit" id="pay-button">Pay</button>
+
+                    <button type="submit" id="pay-button"
+                        style="display: flex; align-items: center; justify-content: center; background:indigo; color:white;">Pay
+                        <span class="loaderDiv" style="display:none; margin-left:2rem;"></span> </button>
+
+                    <style>
+                    .loaderDiv {
+                        border: 3px solid #f3f3f3;
+                        /* Light gray */
+                        border-top: 8px solid indigo;
+                        /* Blue */
+                        border-radius: 50%;
+                        width: 30px;
+                        height: 30px;
+                        animation: spin 1s linear infinite;
+                        margin: auto;
+                    }
+
+                    @keyframes spin {
+                        0% {
+                            transform: rotate(0deg);
+                        }
+
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+                    </style>
+
                 </form>
 
                 <div id="payment-result"></div>
@@ -4080,7 +4089,24 @@ Submit make it with white background and content theeme is indigo  -->
                         showToast('error', error.message);
                     } else {
                         // Send PaymentMethod ID and amount to your backend to create the PaymentIntent
-                        const amount = document.getElementById('package').value;
+
+
+                        const resp = <?php echo json_encode($resp); ?>;
+                        const amount = parseInt(resp.vehicleHistory.price, 10);
+                        const pkg = document.getElementById('package').value;
+                        const fname = document.getElementById('first_name').value;
+                        const lname = document.getElementById('last_name').value;
+                        const email = document.getElementById('email').value;
+                        const phone = document.getElementById('phone').value;
+
+                        if (!amount || !pkg || !fname || !lname || !email || !phone) {
+                            showToast('error', 'All fields are required');
+                            return;
+                        }
+                        // Show loader
+                        const loaderDiv = document.querySelector('.loaderDiv');
+                        loaderDiv.style.display = 'flex';
+
                         const response = await fetch("{{ route('stripepay') }}", {
                             method: 'POST',
                             headers: {
@@ -4088,21 +4114,38 @@ Submit make it with white background and content theeme is indigo  -->
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                             },
                             body: JSON.stringify({
-                                payment_method_id: paymentMethod.id,
-                                amount: amount
+                                trid: paymentMethod.id,
+                                amount: amount,
+                                pkg: pkg,
+                                fname: fname,
+                                lname: lname,
+                                email: email,
+                                phone: phone,
+                                card_number: paymentMethod.card.last4,
+                                vid: resp.vehicleHistory.vId,
+                                make: resp.vehicleHistory.make,
+                                vImg: resp.vehicleHistory.vImg,
+                                bodyStyle: resp.vehicleHistory.bodyStyle,
+                                vehicleType: resp.vehicleHistory.vtype,
+                                model: resp.vehicleHistory.modelYear,
+                                type: resp.vehicleHistory.type,
+                                title: resp.vehicleHistory.title,
                             }),
                         });
 
                         const result = await response.json();
-
                         console.log("👉 result", result.message);
 
                         if (result.success) {
                             // Payment was successful
                             showToast('success', result.message);
+                            showPopupPaymentSuccess();
                         } else {
                             // Payment failed
+                            const loaderDiv = document.querySelector('.loaderDiv');
+                            loaderDiv.style.display = 'none';
                             showToast('error', result.message);
+                            showPopupPaymentFail();
                         }
                     }
                 });
@@ -4111,6 +4154,8 @@ Submit make it with white background and content theeme is indigo  -->
                 function showToast(type, message) {
                     const resultDiv = document.getElementById('payment-result');
                     resultDiv.textContent = message;
+                    const loaderDiv = document.querySelector('.loaderDiv');
+                    loaderDiv.style.display = 'none';
                     if (type === 'success') {
                         resultDiv.style.color = 'green';
                     } else {
@@ -4133,7 +4178,80 @@ Submit make it with white background and content theeme is indigo  -->
         @include('footer.footer')
 
     </div><!-- #page -->
+    <div id="popup-payment-success" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closePopupPaymentSuccess()">&times;</span>
+                <h2>Payment Success</h2>
+            </div>
+            <br>
+            <div class="modal-body">
+                <div class="text-center">
+                    <center>
+                        <img src="{{asset('assets/success.png')}}" alt="payment fail" style="width:40%;">
+                    </center>
+                    <h4 class="" style="color:green;">Your payment has been made successfully.</h4>
+                </div>
+                <br>
+                <a href="{{route('dpdf',['id'=>$resp['vehicleHistory']['vId']])}}" class="btn btn-success" style="
+                    background-image: linear-gradient(to bottom right, #34e85a, #008000);
+                    border-radius: 10px;
+                    border: none;
+                    padding: 10px 50px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    color:white;
+                    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+                ">Download</a>
+            </div>
 
+        </div>
+    </div>
+
+
+
+
+    <div id="popup-payment-fail" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closePopupPaymentFail()">&times;</span>
+                <h2>Payment Fail</h2>
+            </div>
+            <br>
+            <div class="modal-body">
+                <div class="text-center">
+                    <center>
+                        <img src="{{asset('assets/fail.png')}}" alt="payment fail" style="width:50%;">
+                    </center>
+                    <!-- <h4 class="" style="color:red;"> Try Later </h4> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <button type="button" onclick="showPopupPaymentSuccess()"></button>
+    <button type="button" onclick="showPopupPaymentFail()"></button> -->
+    <script>
+    function showPopupPaymentSuccess() {
+        document.getElementById("popup-payment-success").style.display = "flex";
+        document.body.style.overflow = "hidden";
+    }
+
+    function closePopupPaymentSuccess() {
+        document.getElementById("popup-payment-success").style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+    ///////
+    function showPopupPaymentFail() {
+        document.getElementById("popup-payment-fail").style.display = "flex";
+        document.body.style.overflow = "hidden";
+    }
+
+    function closePopupPaymentFail() {
+        document.getElementById("popup-payment-fail").style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+    </script>
 
 
 

@@ -22,9 +22,18 @@ use App\Http\Controllers\userside\pdfController;
 //     return view('welcome');
 // });
 
+
+Route::get('notfound', function () {
+    return view('notfound');
+})->name('notfound');
+
 Route::get('signup', function () {
     return view('signup');
 })->name('signup');
+
+Route::get('email', function () {
+    return view('email');
+})->name('email');
 
 
 // without login side

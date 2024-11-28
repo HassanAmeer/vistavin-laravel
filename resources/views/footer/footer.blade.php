@@ -235,14 +235,16 @@
         </div>
         <br>
         <div class="modal-body">
-            <select id="vehicle-type" class="form-control">
-                <option value="bike">Bike</option>
-                <option value="car">Car</option>
-            </select>
-            <input type="text" id="vin-number" class="form-control" placeholder="Enter VIN Number">
-            <br><br>
-            <a href="{{route('fillreport')}}" class="btn reportgenbtn">Generate
-                Report</a>
+            <form action="{{route('fillreport')}}" method="get">
+                <select name="type" id="vehicle-type" class="form-control">
+                    <option value="car" selected>Car</option>
+                    <option value="bike">Bike</option>
+                </select>
+                <input type="text" name="vid" id="vin-number" class="form-control" placeholder="Enter VIN Number"
+                    required>
+                <br><br>
+                <button type="submit" class="btn reportgenbtn">Generate Report</button>
+            </form>
         </div>
     </div>
 </div>

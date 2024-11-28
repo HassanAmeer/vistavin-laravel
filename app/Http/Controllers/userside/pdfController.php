@@ -43,7 +43,7 @@ class pdfController extends Controller
 
         $check = "Not Found";
         $resp = [];
-        $data = vehicleHistoryReports::where('vId', $req->id)->first();
+        $data = vehicleHistoryReports::where('vId', $req->id)->where('showReports', 1)->first();
         if ($data) {
             $additionalHistory = additionalHistory::where('vId', $req->id)->get()->first();
             $ownershipHistory = ownershipHistory::where('vId', $req->id)->get()->first();
@@ -66,6 +66,7 @@ class pdfController extends Controller
             ];
         } else {
             $check = "Not Found";
+            return redirect()->route('notfound');
         }
         // dd($resp);
 
@@ -77,11 +78,11 @@ class pdfController extends Controller
     }
 
 
-    public function downloadPdfF()
+    public function downloadPdfF(Request $req)
     {
         $check = "Not Found";
         $resp = [];
-        $data = vehicleHistoryReports::where('vId', $req->id)->first();
+        $data = vehicleHistoryReports::where('vId', $req->id)->where('showReports', 1)->first();
         if ($data) {
             $additionalHistory = additionalHistory::where('vId', $req->id)->get()->first();
             $ownershipHistory = ownershipHistory::where('vId', $req->id)->get()->first();
@@ -104,9 +105,10 @@ class pdfController extends Controller
             ];
         } else {
             $check = "Not Found";
+            return redirect()->route('notfound');
         }
 
         $pdf = Pdf::loadView('pdf', ['resp' => $resp]);
-        return $pdf->download('1.pdf');
+        return $pdf->download($resp['settings']['websiteName'].'_1.pdf');
     }
 }
