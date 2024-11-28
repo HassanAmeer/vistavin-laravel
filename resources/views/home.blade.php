@@ -617,7 +617,7 @@
     input[type="date"]:focus,
     select:focus,
     textarea:focus {
-        border-color: #046BD2;
+        border-color: #6E04D2FF;
         box-shadow: none;
         outline: none;
         color: var(--ast-form-input-focus-text, #475569);
@@ -1894,7 +1894,7 @@
     }
 
     :root {
-        --ast-global-color-0: #046bd2;
+        --ast-global-color-0: #3404D2FF;
         --ast-global-color-1: #045cb4;
         --ast-global-color-2: #1e293b;
         --ast-global-color-3: #334155;
@@ -2956,7 +2956,7 @@
     }
 
     :root {
-        --e-global-color-astglobalcolor0: #046bd2;
+        --e-global-color-astglobalcolor0: #3404D2FF;
         --e-global-color-astglobalcolor1: #045cb4;
         --e-global-color-astglobalcolor2: #1e293b;
         --e-global-color-astglobalcolor3: #334155;

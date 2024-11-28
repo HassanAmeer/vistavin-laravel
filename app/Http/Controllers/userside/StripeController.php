@@ -11,9 +11,10 @@ use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
 
 use \App\Models\downloadedDoc;
+use \App\Models\settings;
 
 use Illuminate\Support\Facades\Mail;
-use App\Mail\EmailClassName;
+use App\Mail\InspectMyRides;
 
 class StripeController extends Controller
 {
@@ -90,7 +91,7 @@ class StripeController extends Controller
             if($check){
                 $settings = settings::first();
                 // send email
-                Mail::to($request->email)->send(new EmailClassName($settings,$request->vid,$request->title,$request->email));
+                Mail::to($request->email)->send(new InspectMyRides($settings,$request->vid,$request->title,$request->email));
             }
 
             return response()->json([
