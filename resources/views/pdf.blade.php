@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title> pdf </title>
+    <link rel="shortcut icon" href="{{asset($resp['baseUrl'].'/uploads/'.$resp['settings']['websiteLogo'])}}"
+        type="image/x-icon" sizes="32x32">
+    <title>{{$resp['settings']['websiteName']}}</title>
     <style>
     /* @media screen and (max-width: 600px) {
         body {
@@ -28,13 +30,22 @@
 
     <center>
         <table
-            style="width: 100%; font-weight:300; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; color:grey;  border-collapse: separate; ">
-            <tr style="border-collapse: separate; justify-content:space-between;">
-                <td style="padding-right: 10px;color:silver;">{{ \Carbon\Carbon::now()->format('m/d/Y g:i A') }}</td>
-                <td class="text-right" style="padding-left: 10px;">
-                    {{isset($resp['vehicleHistory']['vName']) ? $resp['vehicleHistory']['vName'] : ''}}</td>
-                <td class="text-right" style="padding-left: 10px; color:silver;">ID #:
-                    {{isset($resp['vehicleHistory']['vId']) ? $resp['vehicleHistory']['vId'] : ''}}</td>
+            style="width: 100%; font-weight:300; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; color:grey; border-collapse: separate; ">
+            <tr
+                style="border-collapse: separate !important; justify-content:space-between; justify-content:right; align-items:right;">
+                <td style="text-align: left; padding-right: 10px;color:silver;">
+                    {{ \Carbon\Carbon::now()->format('m/d/Y g:i A') }}</td>
+                <td style="text-align: right; padding-left: 10px;">
+                    ID #: {{isset($resp['vehicleHistory']['vId']) ? $resp['vehicleHistory']['vId'] : ''}}
+                    @if($resp['vehicleHistory']['isShowImg'] == 1)
+                    <img src="{{ file_exists(public_path('uploads/'.$resp['vehicleHistory']['vImg'])) 
+            ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path('uploads/'.$resp['vehicleHistory']['vImg']))) 
+            : 'https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg' }}"
+                        style="width:4rem; padding-left:1rem;"
+                        onerror="this.onerror=null;this.src='https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg';"
+                        alt="Logo">
+                    @endif
+                </td>
             </tr>
         </table>
     </center>
@@ -47,15 +58,9 @@
                     <img src="{{ file_exists(public_path('uploads/'.$resp['settings']['websiteLogo'])) 
             ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path('uploads/'.$resp['settings']['websiteLogo']))) 
             : 'https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg' }}"
-                        style="width:3rem;"
+                        style="width:4rem;"
                         onerror="this.onerror=null;this.src='https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg';"
                         alt="Logo">
-
-
-                    <!-- <img
-                        src="data:image/jpeg;base64, {{ $resp['baseUrl'] . '/uploads/' . (isset($resp['settings']['websiteLogo']) ? $resp['settings']['websiteLogo'] : '') }}" /> -->
-
-
                 </td>
                 <td>{{isset($resp['vehicleHistory']['title']) ? $resp['vehicleHistory']['title'] : ''}}</td>
                 <td>{{isset($resp['vehicleHistory']['price']) ? $resp['vehicleHistory']['price'] : ''}} $</td>
@@ -118,9 +123,22 @@
     </div>
     <div class=" bg-light">
         <div class="carfax-header">
-            <!-- <img src="https://via.placeholder.com/50x20" alt="CARFAX Logo"> Additional History -->
-            <p class="text-muted mb-0"> issues are reported to
-                {{isset($resp['settings']['websiteName']) ? $resp['settings']['websiteName'] : ''}} </p>
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 4rem;">
+                        <img src="{{ file_exists(public_path('uploads/'.$resp['settings']['websiteLogo'])) 
+                    ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path('uploads/'.$resp['settings']['websiteLogo']))) 
+                    : 'https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg' }}"
+                            style="width:4rem;"
+                            onerror="this.onerror=null;this.src='https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg';"
+                            alt="Logo">
+                    </td>
+                    <td>
+                        <p class="text-muted mb-0" style="padding-left:2rem;"> issues are reported to
+                            {{isset($resp['settings']['websiteName']) ? $resp['settings']['websiteName'] : ''}} </p>
+                    </td>
+                </tr>
+            </table>
         </div>
         <table class="table table-bordered carfax-table">
             <thead>
@@ -220,8 +238,21 @@
 
     <div class=" bg-light">
         <div class="carfax-header">
-            <!-- <img src="https://via.placeholder.com/50x20" alt="CARFAX Logo"> Title History -->
-            <p class="text-muted mb-0"> Gurantees in this section </p>
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 4rem;">
+                        <img src="{{ file_exists(public_path('uploads/'.$resp['settings']['websiteLogo'])) 
+                    ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path('uploads/'.$resp['settings']['websiteLogo']))) 
+                    : 'https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg' }}"
+                            style="width:4rem;"
+                            onerror="this.onerror=null;this.src='https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg';"
+                            alt="Logo">
+                    </td>
+                    <td>
+                        <p class="text-muted mb-0" style="padding-left:2rem;"> Gurantees in this section </p>
+                    </td>
+                </tr>
+            </table>
         </div>
         <table class="table table-bordered carfax-table">
             <thead>
@@ -312,8 +343,21 @@
 
     <div class=" bg-light">
         <div class="carfax-header">
-            <!-- <img src="https://via.placeholder.com/50x20" alt="CARFAX Logo"> Title History -->
-            <p class="text-muted mb-0"> Gurantees in this section </p>
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 4rem;">
+                        <img src="{{ file_exists(public_path('uploads/'.$resp['settings']['websiteLogo'])) 
+                    ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path('uploads/'.$resp['settings']['websiteLogo']))) 
+                    : 'https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg' }}"
+                            style="width:4rem;"
+                            onerror="this.onerror=null;this.src='https://static.vecteezy.com/system/resources/previews/027/538/857/non_2x/electric-vehicle-car-icon-outline-car-outline-drawing-vector.jpg';"
+                            alt="Logo">
+                    </td>
+                    <td>
+                        <p class="text-muted mb-0" style="padding-left:2rem;"> Gurantees in this section </p>
+                    </td>
+                </tr>
+            </table>
         </div>
         <table class="table table-bordered carfax-table">
             <thead>

@@ -47,7 +47,7 @@ class settingsController extends AdminController
         $grid->column('showInstagram', __('ShowInstagram'))->switch();
         $grid->column('instagramLink', __('InstagramLink'));
         $grid->column('showPrivacyPolicy', __('ShowPrivacyPolicy'))->switch();
-        $grid->column('showShippingPolicy', __('showShippingPolicy'))->switch();
+        // $grid->column('showShippingPolicy', __('showShippingPolicy'))->switch();
         $grid->column('showReturnRefundPolicy', __('showReturnRefundPolicy'))->switch();
         $grid->column('showTermsCondition', __('ShowTermsCondition'))->switch();
         // $grid->column('introVideo', __('Intro Video'))->video($baseUrl.'/uploads/',640,480);
@@ -89,10 +89,10 @@ class settingsController extends AdminController
         $show->field('showInstagram', __('ShowInstagram'));
         $show->field('instagramLink', __('InstagramLink'));
         $show->field('showPrivacyPolicy', __('ShowPrivacyPolicy'));
-        $show->field('showShippingPolicy', __('showShippingPolicy'));
+        // $show->field('showShippingPolicy', __('showShippingPolicy'));
         $show->field('showReturnRefundPolicy', __('showReturnRefundPolicy'));
         $show->field('showTermsCondition', __('ShowTermsCondition'));
-        $show->field('introVideo', __('introVideo'))->video();
+        // $show->field('introVideo', __('introVideo'))->video();
 
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -122,12 +122,12 @@ class settingsController extends AdminController
         $form->switch('showInstagram', __('ShowInstagram'));
         $form->text('instagramLink', __('InstagramLink'));
         $form->switch('showPrivacyPolicy', __('ShowPrivacyPolicy'));
-        $form->switch('showShippingPolicy', __('showShippingPolicy'));
+        // $form->switch('showShippingPolicy', __('showShippingPolicy'));
         $form->switch('showReturnRefundPolicy', __('showReturnRefundPolicy'));
         $form->switch('showTermsCondition', __('ShowTermsCondition'));
 
         // Add video upload field
-        $form->file('introVideo', __('Intro Video'))->options(['accept' => 'video/*']);
+        // $form->file('introVideo', __('Intro Video'))->options(['accept' => 'video/*']);
 
         return $form;
     }
