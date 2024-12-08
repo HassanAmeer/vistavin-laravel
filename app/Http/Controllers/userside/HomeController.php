@@ -71,7 +71,10 @@ class HomeController extends Controller
                 // 'reportSetting' => $reportSetting,
             ];
         } else {
-            return redirect()->route('notfound');
+            $vid = $req->vid;
+            $vtype = $req->type;
+            // return redirect()->route('notfound');
+            return view('manualfillreport', compact(['baseUrl','settingsData','resp','vid','vtype']));
         }
 
         return view('fillreport', compact(['baseUrl','settingsData','resp']));

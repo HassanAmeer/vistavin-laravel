@@ -53,6 +53,7 @@ Route::post('/stripe/pay', [StripeController::class, 'processPayment'])->name('s
 
 Route::get('/vpdf/{id}', [pdfController::class, 'viewPdfF'])->name('vpdf');
 Route::get('/dpdf/{id}', [pdfController::class, 'downloadPdfF'])->name('dpdf');
+Route::get('/spdf/{id}/{email}', [pdfController::class, 'sendEmailPdfF'])->name('spdf');
 
 
 

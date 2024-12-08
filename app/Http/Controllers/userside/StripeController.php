@@ -70,6 +70,8 @@ class StripeController extends Controller
 
 
            $check = downloadedDoc::create([
+                'orderType' => $request->orderType,
+                'status' => $request->status,
                 'transactionId' => $request->trid,
                 'price' => (string) $request->amount,
                 'package' => $request->pkg,

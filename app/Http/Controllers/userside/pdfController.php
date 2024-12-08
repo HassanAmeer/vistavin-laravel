@@ -15,6 +15,10 @@ use \App\Models\glossary;
 use \App\Models\reportSetting;
 use \App\Models\settings;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InspectMyRides;
+
+use \App\Models\downloadedDoc;
 
 class pdfController extends Controller
 {
@@ -111,4 +115,24 @@ class pdfController extends Controller
         $pdf = Pdf::loadView('pdf', ['resp' => $resp]);
         return $pdf->download($resp['settings']['websiteName'].'_1.pdf');
     }
+    ////////////////////////
+    public function sendEmailPdfF(Request $req)
+    {
+        $data = vehicleHistoryReports::where('vId', $req->id)->where('showReports', 1)->first();
+        if ($data) {
+            $settings = settings::first();
+            Mail::to($req->email)->send(new InspectMyRides($settings,$req->id,$data->title,$req->email));
+
+           $check = downloadedDoc::where('vId', $req->id)->first();
+           if($check){
+                $check->update([
+                    'status' => 1,
+                ]);
+           }
+            // return back()->with('success', 'Email Sent Successfully.');
+        } else {
+            return redirect()->route('notfound');
+        }
+    }
+  ////////////////////////
 }

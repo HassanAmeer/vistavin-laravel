@@ -4114,6 +4114,8 @@ Submit make it with white background and content theeme is indigo  -->
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                             },
                             body: JSON.stringify({
+                                orderType: "auto",
+                                status: 1,
                                 trid: paymentMethod.id,
                                 amount: amount,
                                 pkg: pkg,

@@ -94,9 +94,7 @@ class vehicleHistoryReportsController extends AdminController
         
             // Default case if no valid points found
             return '<ul><li>' . __('No Points Available') . '</li></ul>';
-        })
-        ->width(200) // Set column width to 200px
-        ->style('min-width:35rem; white-space: normal; overflow: hidden; list-style-type: disc; color:black;');
+        })->style('min-width:35rem; white-space: normal; overflow: hidden; list-style-type: disc; color:black;');
         
         
         // $grid->column('footerDesc', __('Footer Descripton'))->style('min-width:35rem; white-space: normal; overflow: hidden; list-style-type: disc; color:#0090b4;');

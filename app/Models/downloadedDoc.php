@@ -13,6 +13,8 @@ class downloadedDoc extends Model
     protected $fillable = [
         'id',
         'vId',
+        'orderType',
+        'status',
         'userName',
         'email',
         'phone',
