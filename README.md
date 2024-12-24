@@ -7,14 +7,14 @@
     <h4> Vista Vin </h4>
     <p> for reporrt genrator </p>
     <img src="image0.png" alt="Build Status" style="width:80%;">
-        <br>
-            <hr>
-        <br>
+        <br> <hr> <br>
     <img src="image1.png" alt="Build Status" style="width:80%;">
-        <br>
-            <hr>
-        <br>
+        <br> <hr> <br>
     <img src="image2.png" alt="Build Status" style="width:80%;">
+        <br> <hr> <br>
+    <img src="image3.png" alt="Build Status" style="width:80%;">
+        <br> <hr> <br>
+    <img src="image4.png" alt="Build Status" style="width:80%;">
 </center>
 
 
