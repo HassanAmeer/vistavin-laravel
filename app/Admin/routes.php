@@ -25,4 +25,6 @@ Route::group([
     $router->resource('glossaries', glossaryController::class);
     $router->resource('report-settings', reportSettingController::class);
     $router->resource('pagesDesigns', PagesDesignController::class);
+    $router->resource('users-msgs', UsersMsgsController::class);
+    
 });

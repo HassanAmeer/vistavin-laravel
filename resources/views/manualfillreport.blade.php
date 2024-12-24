@@ -15,6 +15,40 @@
     <link rel="stylesheet" id="elementor-post-6-css" href="./homeassets/post-6.css" media="all">
     <link rel="stylesheet" id="elementor-post-174-css" href="./homeassets/post-174.css" media="all">
     <link rel="stylesheet" id="astra-theme-css-css" href="./homeassets/main.min.css" media="all">
+
+
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+    try {
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('4e512126a627fac5dc3f', {
+            cluster: 'ap2'
+        });
+        var rid = localStorage.getItem('deviceId');
+
+        // var channel = pusher.subscribe('chat-channel-' + uid.toString());
+        var channel = pusher.subscribe('chat-channel');
+        channel.bind('chat-event', function(resp) {
+            const data = JSON.parse(JSON.stringify(resp.msg));
+            if (data.rid == rid || data.sid == "admin") {
+                const message = `<div class="message admin-message">
+                            <img src="{{ asset('assets/admin.png') }}" alt="User" class="user-icon">
+                            <div class="message-content">
+                                <span class="user-name">Admin: </span>
+                                <span>${data.msg}</span>
+                            </div>
+                        </div>`;
+                $('.messages').append(message);
+                $('.messages').scrollTop($('.messages')[0].scrollHeight);
+            }
+        });
+    } catch (error) {
+        alert(error);
+    }
+    </script>
+    <!-- push -->
+
+
     <style id="astra-theme-css-inline-css">
     :root {
         --ast-post-nav-space: 0;
@@ -4002,7 +4036,7 @@ Submit make it with white background and content theeme is indigo  -->
                         <p style="margin-bottom: 10px; font-size: 1.2rem; font-weight: bold; color: #333;">Enter Your
                             Card Details</p>
                         <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <span style="flex-shrink: 0; margin-right: 10px; font-size: 1.5rem; color: #666;"> 💳
+                            <span style="flex-shrink: 0; margin-right: 10px; font-size: 1.5rem; color: #666;"> ðŸ’³
                             </span>
                             <div style="flex-grow: 1;" id="card-input"></div>
                         </div>
@@ -4047,7 +4081,7 @@ Submit make it with white background and content theeme is indigo  -->
 
                 <script>
                 const stripe = Stripe(
-                    'pk_test_51MvzNZCXOCh8OoqULZdng256dzJkTiNmLsBWnk6xUjm8qlmYRHYOdLsDUxdbQNLCrOcdg0q8MaTGA345PKdWx5Dw00qyngN6Yu'
+                    'pk_live_51QVrLcLmEeQaj5AEhXCkPHsUzrhwYaTcOu7ZwRsY6v1TqdqVrYIGCjMUplqHIlLdklvbDMEHbFcBHszOTImcGTDa00tiYarefM'
                 );
                 const elements = stripe.elements();
                 const card = elements.create('card');
@@ -4101,8 +4135,10 @@ Submit make it with white background and content theeme is indigo  -->
                                 orderType: "manual",
                                 status: 0,
                                 trid: paymentMethod.id,
+                                // amount: "1",
                                 amount: pkg,
                                 pkg: pkg,
+                                // pkg: "1",
                                 fname: fname,
                                 lname: lname,
                                 email: email,
@@ -4120,7 +4156,7 @@ Submit make it with white background and content theeme is indigo  -->
                         });
 
                         const result = await response.json();
-                        console.log("👉 result", result.message);
+                        console.log("ðŸ‘‰ result", result.message);
 
                         if (result.success) {
                             // Payment was successful
@@ -4241,6 +4277,353 @@ Submit make it with white background and content theeme is indigo  -->
 
 
 
+
+
+
+
+
+
+
+    <style>
+    .chat-popup {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        /* width: 400px; */
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .header {
+        background-color: #9FA1FFFF;
+        color: white;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .messages {
+        overflow-y: auto;
+        padding: 10px;
+        min-height: 40vh;
+        max-height: 60vh;
+    }
+
+    .message {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+
+    .admin-message {
+        justify-content: flex-start;
+        /* Align admin messages to the left */
+    }
+
+    .user-message {
+        justify-content: flex-end;
+        /* Align user messages to the right */
+    }
+
+    .user-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .message-content {
+        background-color: #f1f1f1;
+        /* Admin message background */
+        color: black;
+        /* Admin message text color */
+        border-radius: 5px;
+        padding: 10px;
+        position: relative;
+        max-width: 75%;
+        /* Adjust if needed */
+    }
+
+    .user-message .message-content {
+        background-color: #481D88FF;
+        /* User message background */
+        color: white;
+        /* User message text color */
+    }
+
+    .user-name {
+        font-weight: bold;
+    }
+
+    .time {
+        font-size: 0.8em;
+        color: gray;
+        display: block;
+    }
+
+    .input-container {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ccc;
+    }
+
+    #messageInput {
+        flex: 1;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        /* Add border for input */
+    }
+
+    .stickyChatButton {
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 980;
+        border-radius: 50%;
+        border: 1px solid black;
+        animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        /* perspective: 1000px; */
+    }
+
+    @keyframes shake {
+
+        10%,
+        90% {
+            transform: translate3d(-1px, 0, 0);
+        }
+
+        20%,
+        80% {
+            transform: translate3d(2px, 0, 0);
+        }
+
+        30%,
+        50%,
+        70% {
+            transform: translate3d(-4px, 0, 0);
+        }
+
+        40% {
+            transform: translate3d(4px, 0, 0);
+        }
+
+        60% {
+            transform: translate3d(-4px, 0, 0);
+        }
+    }
+
+    .stickyChatButton:hover {
+        scale: 1.5;
+        transition: 0.4s linear ease;
+        background-color: transparent;
+        box-shadow: 1px 1px 20px 0px silver;
+    }
+
+    @media screen and (max-width: 600px) {
+        .chat-popup {
+            width: 300px;
+        }
+    }
+
+    @media screen and (min-width: 600px) {
+        .chat-popup {
+            width: 400px;
+        }
+    }
+    </style>
+    <div class="chat-popup" id="chatPopup">
+        <form id="chatForm">
+            @csrf
+            <div class="header">
+                <h6><img src="{{ asset('assets/user.png') }}" alt="User" class="user-icon" style="opacity:0.4"> <span
+                        id="deviceIdIs"></span>:
+                    User</h6>
+                <span class="close" style="color:indigo; cursor:pointer" id="closePopup">X</span>
+            </div>
+            <div class="messages">
+                <!-- <div class="message admin-message">
+                    <img src="{{ asset('assets/admin.png') }}" alt="Admin" class="user-icon">
+                    <div class="message-content">
+                        <span class="user-name">Admin:</span>
+                        <span>Welcome to the chat!</span>
+                    </div>
+                </div> -->
+                <!-- Add more admin messages as needed -->
+            </div>
+            <!-- <input type="hidden" name="rid" id="rid" value="email@gmail.com"> -->
+            <div class="input-container">
+                <div style="width:90%;">
+                    <input type="text" id="messageInput" name="msg" placeholder="Type a message..."
+                        style="width:95%; padding-right" autocomplete="off">
+                </div>
+                <button class="btn btn-outline-dark" type="submit" id="sendButton"
+                    style="border-radius:50%; margin:auto; margin-top:-1%; padding:0.5em; background:transparent;">
+                    <!-- <i class="fa fa-paper-plane" style="margin:auto; padding-top:5px;"></i> -->
+                    <img src="{{ asset('assets/send.png') }}" style="width:2em; height:2em; transform:scale(1.5);" />
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <button class="chatButton stickyChatButton btn btn-outline-dark btn-lg rounded-8" style="background:#E5C8FFFF"> <img
+            src="{{ asset('assets/chaticon.png') }}" style="width:2em; height:2em; transform:scale(1.5);" /></button>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+    $(document).ready(function() {
+        $('.chatButton').click(function() {
+            $('#chatPopup').toggle(); // Show or hide the popup
+        });
+
+        $('#closePopup').click(function() {
+            $('#chatPopup').hide(); // Hide the popup
+        });
+
+        $(document).click(function(event) {
+            if (!$(event.target).closest('#chatPopup, .chatButton').length) {
+                $('#chatPopup').hide();
+            }
+        });
+
+
+        const userAgent = navigator.userAgent || navigator.platform || Math.floor(Math.random() * 10000)
+            .toString().padStart(4, '0');
+        $('#deviceIdIs').text(navigator.platform);
+
+        // alert(`User Agent: ${userAgent}`);
+        if (localStorage.getItem('deviceId') == null || localStorage.getItem('deviceId') == undefined ||
+            localStorage
+            .getItem('deviceId') == "") {
+            localStorage.setItem('deviceId', `${userAgent}`);
+        }
+    });
+    </script>
+
+    <script>
+    $(document).ready(function() {
+        $('.chatButton').click(function() {
+            getChats();
+        });
+    });
+    </script>
+    <script>
+    function getChats() {
+        $('.messages').empty().append(` <div class="message admin-message">
+                    <img src="{{ asset('assets/admin.png') }}" alt="Admin" class="user-icon">
+                    <div class="message-content">
+                        <span class="user-name">Admin:</span>
+                        <span>Welcome to the chat!</span>
+                    </div>
+                </div>`);
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('getchats') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "sid": localStorage.getItem('deviceId'),
+                // "rid": $('#rid').val()
+            },
+            success: function(resp) {
+                // alert(resp);
+                $.each(resp.result, function(index, value) {
+                    var newMessage;
+                    if (value.sid === localStorage.getItem('deviceId')) {
+                        newMessage = `<div class="message user-message">
+                                <div class="message-content">
+                                    <span class="user-name"> You: </span>
+                                    <span>${value.msg}</span>
+                                </div>
+                            </div>`;
+                    } else {
+                        newMessage = `<div class="message admin-message">
+                         <img src="{{ asset('assets/admin.png') }}" alt="User" class="user-icon">
+                                <div class="message-content">
+                                    <span class="user-name"> Admin: </span>
+                                    <span>${value.msg}</span>
+                                </div>
+                            </div>`;
+                    }
+
+                    $('.messages').append(newMessage);
+                    $('.messages').scrollTop($('.messages')[0].scrollHeight);
+                });
+            },
+            error: function(resp) {
+                // console.error(resp);
+                let errorMessage = "Something went wrong";
+                if (resp.responseJSON && resp.responseJSON.errors) {
+                    errorMessage = Object.values(resp.responseJSON.errors).join(
+                        '');
+                } else if (resp.responseJSON && resp.responseJSON.error) {
+                    errorMessage = Object.values(resp.responseJSON.error).join(
+                        '');
+                }
+
+                toastr.error(errorMessage, 'Error', {
+                    positionClass: 'toast-top-right',
+                    timeOut: 5000
+                });
+
+            }
+        });
+    }
+    </script>
+    <script>
+    document.getElementById('chatForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append('sid', localStorage.getItem('deviceId'));
+        formData.append('rid', 'admin');
+
+        var newMessage = `<div class="message user-message">
+                                <div class="message-content">
+                                    <span class="user-name">You: </span>
+                                    <span>${$('#messageInput').val()}</span>
+                                </div>
+                            </div>`;
+        $('.messages').append(newMessage);
+        $('.messages').scrollTop($('.messages')[0].scrollHeight);
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('sendmsg') }}",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(resp) {
+                $('#messageInput').val('');
+            },
+            error: function(resp) {
+                console.error(resp);
+                let errorMessage = "Something went wrong";
+                if (resp.responseJSON && resp.responseJSON.errors) {
+                    errorMessage = Object.values(resp.responseJSON.errors).join(
+                        '');
+                }
+                toastr.error(errorMessage, 'Error', {
+                    positionClass: 'toast-top-right',
+                    timeOut: 5000
+                });
+
+            }
+        });
+    });
+    </script>
 
 
 

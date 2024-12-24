@@ -26,6 +26,7 @@ class StripeController extends Controller
     public function processPayment(Request $request)
     {
         try {
+            
             Stripe::setApiKey("sk_test_51MvzNZCXOCh8OoqUMcYC33kfKoUhRxcajYdPOnNpc6AIvBmIKTRgXEEx5YmTSpvr1VlhaCrV2lVRaVXWeJrFghVw005w5vZFvP");
 
 
@@ -92,8 +93,10 @@ class StripeController extends Controller
 
             if($check){
                 $settings = settings::first();
+                if($settings->sendEmail == 1){
                 // send email
                 Mail::to($request->email)->send(new InspectMyRides($settings,$request->vid,$request->title,$request->email));
+                }
             }
 
             return response()->json([

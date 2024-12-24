@@ -84,7 +84,7 @@
                                     <li class="elementor-icon-list-item">
                                         <a href="{{route('privacyPolicy')}}">
                                             <span class="elementor-icon-list-icon">
-                                                <i aria-hidden="true" class="hm hm-arrow-right"></i> </span>
+                                                <i aria-hidden="true" class="">🔘</i> </span>
                                             <span class="elementor-icon-list-text">privacy policy</span>
                                         </a>
                                     </li>
@@ -94,7 +94,7 @@
                                         <a href="{{route('terms')}}">
 
                                             <span class="elementor-icon-list-icon">
-                                                <i aria-hidden="true" class="hm hm-arrow-right"></i> </span>
+                                                <i aria-hidden="true" class="">🔘</i> </span>
                                             <span class="elementor-icon-list-text">terms of service</span>
                                         </a>
                                     </li>
@@ -104,7 +104,7 @@
                                         <a href="{{route('returnpolicy')}}">
 
                                             <span class="elementor-icon-list-icon">
-                                                <i aria-hidden="true" class="hm hm-arrow-right"></i> </span>
+                                                <i aria-hidden="true" class="">🔘</i> </span>
                                             <span class="elementor-icon-list-text">Refund Policy</span>
                                         </a>
                                     </li>

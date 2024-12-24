@@ -5,6 +5,7 @@ use App\Http\Controllers\userside\HomeController;
 use App\Http\Controllers\userside\PagesByEditorByController;
 use App\Http\Controllers\userside\StripeController;
 use App\Http\Controllers\userside\pdfController;
+use App\Http\Controllers\userside\SocketMsgsController;
 
 
 /*
@@ -22,6 +23,10 @@ use App\Http\Controllers\userside\pdfController;
 //     return view('welcome');
 // });
 
+
+Route::get('chat', function () {
+    return view('chats');
+})->name('chat');
 
 Route::get('notfound', function () {
     return view('notfound');
@@ -55,6 +60,8 @@ Route::get('/vpdf/{id}', [pdfController::class, 'viewPdfF'])->name('vpdf');
 Route::get('/dpdf/{id}', [pdfController::class, 'downloadPdfF'])->name('dpdf');
 Route::get('/spdf/{id}/{email}', [pdfController::class, 'sendEmailPdfF'])->name('spdf');
 
+Route::post('sendmsg', [SocketMsgsController::class, 'sendmsg'])->name('sendmsg'); 
+Route::post('getchats', [SocketMsgsController::class, 'getchats'])->name('getchats'); 
 
 
 

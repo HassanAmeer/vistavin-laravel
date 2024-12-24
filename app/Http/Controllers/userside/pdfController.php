@@ -121,7 +121,9 @@ class pdfController extends Controller
         $data = vehicleHistoryReports::where('vId', $req->id)->where('showReports', 1)->first();
         if ($data) {
             $settings = settings::first();
-            Mail::to($req->email)->send(new InspectMyRides($settings,$req->id,$data->title,$req->email));
+            // if($settings->sendEmail == 1){
+                Mail::to($req->email)->send(new InspectMyRides($settings,$req->id,$data->title,$req->email));
+            // }
 
            $check = downloadedDoc::where('vId', $req->id)->first();
            if($check){

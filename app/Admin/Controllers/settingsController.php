@@ -38,6 +38,7 @@ class settingsController extends AdminController
         $grid->column('websiteName', __('WebsiteName'));
         $grid->column('websiteLogo', __('WebsiteLogo'))->image($baseUrl.'/uploads/',75,75);
         $grid->column('webisteMiniLogo', __('WebisteMiniLogo'))->image($baseUrl.'/uploads/',75,75);
+        $grid->column('sendEmail', __('Send Auto Email'))->switch();
         $grid->column('email', __('Email'));
         $grid->column('phone', __('Phone'));
         $grid->column('showWhatsapp', __('Show whatsapp'))->switch();
@@ -81,17 +82,41 @@ class settingsController extends AdminController
         $show->field('websiteLogo', __('WebsiteLogo'))->image($baseUrl.'/uploads/',75,75);
         $show->field('webisteMiniLogo', __('WebisteMiniLogo'))->image($baseUrl.'/uploads/',75,75);
         $show->field('email', __('Email'));
+        $show->field('sendEmail', __('Send Auto Email'))->as(function ($sendEmail) {
+            return $sendEmail ? 'Yes' : 'No';
+        });
         $show->field('phone', __('Phone'));
-        $show->switch('showWhatsapp', __('Show whatsapp'));
+        // $show->switch('showWhatsapp', __('Show whatsapp'));
+        $show->field('sendEmail', __('Send Auto Email'))->as(function ($sendEmail) {
+            return $sendEmail ? 'Yes' : 'No';
+        });
         $show->field('whatsappNumber', __('WhatsappNumber'));
-        $show->switch('showFacebook', __('ShowFacebook'));
+        // $show->switch('showFacebook', __('ShowFacebook'));
+        $show->field('showFacebook', __('Show Facebook'))->as(function ($sendEmail) {
+            return $sendEmail ? 'Yes' : 'No';
+        });
         $show->field('facebookLink', __('FacebookLink'));
-        $show->field('showInstagram', __('ShowInstagram'));
+        // $show->field('showInstagram', __('ShowInstagram'));
+        $show->field('showInstagram', __('Show Instagram'))->as(function ($sendEmail) {
+            return $sendEmail ? 'Yes' : 'No';
+        });
         $show->field('instagramLink', __('InstagramLink'));
-        $show->field('showPrivacyPolicy', __('ShowPrivacyPolicy'));
+        // $show->field('showPrivacyPolicy', __('ShowPrivacyPolicy'));
+        $show->field('showPrivacyPolicy', __('Show Privacy Policy'))->as(function ($sendEmail) {
+            return $sendEmail ? 'Yes' : 'No';
+        });
         // $show->field('showShippingPolicy', __('showShippingPolicy'));
-        $show->field('showReturnRefundPolicy', __('showReturnRefundPolicy'));
-        $show->field('showTermsCondition', __('ShowTermsCondition'));
+        $show->field('showShippingPolicy', __('Show Shipping Policy'))->as(function ($sendEmail) {
+            return $sendEmail ? 'Yes' : 'No';
+        });
+        // $show->field('showReturnRefundPolicy', __('showReturnRefundPolicy'));
+        $show->field('showReturnRefundPolicy', __('Show Return Refund Policy'))->as(function ($sendEmail) {
+            return $sendEmail ? 'Yes' : 'No';
+        });
+        // $show->field('showTermsCondition', __('ShowTermsCondition'));
+        $show->field('showTermsCondition', __('Show Terms Condition'))->as(function ($sendEmail) {
+            return $sendEmail ? 'Yes' : 'No';
+        });
         // $show->field('introVideo', __('introVideo'))->video();
 
         $show->field('created_at', __('Created at'));
@@ -114,6 +139,7 @@ class settingsController extends AdminController
         $form->image('websiteLogo', __('WebsiteLogo'));
         $form->image('webisteMiniLogo', __('WebisteMiniLogo'));
         $form->email('email', __('Email'));
+        $form->switch('sendEmail', __('Send Auto Email'));
         $form->phonenumber('phone', __('Phone'));
         $form->switch('showWhatsapp', __('Show whatsapp'));
         $form->text('whatsappNumber', __('WhatsappNumber'));
